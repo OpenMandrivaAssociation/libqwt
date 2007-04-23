@@ -1,5 +1,5 @@
 %define name libqwt
-%define version 5.0.0
+%define version 5.0.1
 %define release 1
 
 %define realname qwt
