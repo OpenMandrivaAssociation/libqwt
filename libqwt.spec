@@ -17,6 +17,8 @@ License: LGPL
 Group: System/Libraries
 Url: http://sourceforge.net/projects/qwt
 Source: %realname-%version.tar.bz2
+Patch0: qwt-5.0.1-qwtconfig-installbase.patch
+Patch1: qwt-5.0.1-do-not-install-docs.patch
 
 # Automatically added by buildreq on Fri Dec 03 2004
 BuildRequires: fontconfig freetype2 gcc-c++ qt4-devel libstdc++-devel X11-devel
@@ -45,7 +47,7 @@ you should install this package. You need also to install the libqwt package.
 Summary: Development tools for programs which uses Qwt Widget set
 Group: System/Libraries
 Requires: %libname = %version
-Provides: libqwt-devel
+Provides: libqwt-devel = %version-%release
 Obsoletes: %libname-devel
 
 %description -n %libnamedev
@@ -57,45 +59,20 @@ you should install this package. You need also to install the libqwt package.
 
 %prep
 %setup -q -n %realname-%version
+%patch0 -p0
+%patch1 -p0
+sed -i -e 's|INSTALLBASE/lib|INSTALLBASE/%{_lib}|' qwtconfig.pri
 
 %build
 %{qt4dir}/bin/qmake qwt.pro
 make
-(cd examples; %{qt4dir}/bin/qmake examples.pro; make)
-(cd designer; sed -i "s,plugins/designer,plugins/%_lib/designer,g" qwtplugin.pro; %{qt4dir}/bin/qmake qwtplugin.pro; make)
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}%{qt4dir}/include/qwt
-mkdir -p %{buildroot}%{_mandir}/man3
-mkdir -p %{buildroot}%{_libdir}
+make install INSTALL_ROOT=%{buildroot}
 
-for n in src/*.h ; do
-    install -m 644 $n %{buildroot}%{qt4include}/qwt
-done
-
-# install, preserving links
-chmod 644 lib/libqwt.so*
-for n in lib/libqwt.so* ; do
-    cp -d $n %{buildroot}/%{_libdir}
-done
-
-# build the designer plugin
-if [ -e %{qt4dir}/bin/qmake ]; then
-    (cd designer; make install INSTALL_ROOT=%{buildroot})
-    echo "%qt3dir/plugins/designer/libqwtplugin.so" > plugin.list
-else
-    echo >plugin.list
-fi
-
-for n in doc/man/man3/*.3 ; do
-    install -m 644 $n %{buildroot}/%{_mandir}/man3
-done
-
-# clean up the example tree
-(cd examples; make distclean)
-(cd examples; rm -f .*.cache */.*.cache */*/.*.cache)
-(cd examples; rm -rf Makefile */moc */obj */*/moc */*/obj)
+mkdir -p %{buildroot}%{_mandir}/man3/
+install doc/man/man3/* %{buildroot}%{_mandir}/man3/
 
 %post -n %libname -p /sbin/ldconfig
 %postun -n %libname -p /sbin/ldconfig
@@ -107,11 +84,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-,root,root)
 %doc CHANGES COPYING README
 %_libdir/libqwt.so.*
+%{qt4plugins}/designer/*
 
-%files -n %libnamedev -f plugin.list
+%files -n %libnamedev
 %defattr (-,root,root)
 %doc COPYING doc/html/*.css doc/html/*.html doc/html/*.gif doc/html/*.png
 %doc examples
-%qt4include/qwt
-%_libdir/libqwt.so
+%_includedir/*
+%_libdir/*.so
 %_mandir/man3/*
