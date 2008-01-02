@@ -23,6 +23,7 @@ Patch1: qwt-5.0.1-do-not-install-docs.patch
 # Automatically added by buildreq on Fri Dec 03 2004
 BuildRequires: fontconfig freetype2 gcc-c++ qt4-devel libstdc++-devel X11-devel
 
+BuildRoot: %{_tmppath}/%{name}-root
 
 %description
 Qwt is an extension to the Qt GUI library from Troll Tech AS.
