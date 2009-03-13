@@ -18,7 +18,7 @@ Group: System/Libraries
 Url: http://sourceforge.net/projects/qwt
 Source: %realname-%version.tar.bz2
 Patch0: qwt-5.1.1-qwtconfig-installbase.patch
-Patch1: qwt-5.0.1-do-not-install-docs.patch
+Patch1: qwt-5.1.1-do-not-install-docs.patch
 
 # Automatically added by buildreq on Fri Dec 03 2004
 BuildRequires: fontconfig freetype2 gcc-c++ qt4-devel libstdc++-devel X11-devel
@@ -59,8 +59,8 @@ you should install this package. You need also to install the libqwt package.
 
 %prep
 %setup -q -n %realname-%version
-%patch0 -p0
-%patch1 -p0
+%patch0 -p0 -b .base
+%patch1 -p0 -b .doc
 sed -i -e 's|INSTALLBASE/lib|INSTALLBASE/%{_lib}|' qwtconfig.pri
 
 %build
