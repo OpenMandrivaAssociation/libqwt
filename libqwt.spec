@@ -1,5 +1,5 @@
 %define name libqwt
-%define version 5.1.1
+%define version 5.2.0
 %define release 1
 
 %define realname qwt
@@ -13,11 +13,11 @@ Name: %name
 Version: %version
 Release: %mkrel %release
 Summary: 2D plotting widget extension to the Qt GUI
-License: LGPL
+License: Qwt License 1.0
 Group: System/Libraries
 Url: http://sourceforge.net/projects/qwt
-Source: %realname-%version.tar.bz2
-Patch0: qwt-5.1.1-qwtconfig-installbase.patch
+Source: http://freefr.dl.sourceforge.net/sourceforge/qwt/%realname-%version.tar.bz2
+Patch0: qwt-5.2.0-qwtconfig-installbase.patch
 Patch1: qwt-5.1.1-do-not-install-docs.patch
 
 # Automatically added by buildreq on Fri Dec 03 2004
