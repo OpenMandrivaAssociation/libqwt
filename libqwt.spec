@@ -1,5 +1,5 @@
 %define name libqwt
-%define version 5.2.0
+%define version 5.2.1
 %define release 1
 
 %define realname qwt
@@ -17,7 +17,7 @@ License: Qwt License 1.0
 Group: System/Libraries
 Url: http://sourceforge.net/projects/qwt
 Source: http://freefr.dl.sourceforge.net/sourceforge/qwt/%realname-%version.tar.bz2
-Patch0: qwt-5.2.0-qwtconfig-installbase.patch
+Patch0: qwt-5.2.1-qwtconfig-installbase.patch
 Patch1: qwt-5.1.1-do-not-install-docs.patch
 
 # Automatically added by buildreq on Fri Dec 03 2004
