@@ -1,7 +1,3 @@
-%define name libqwt
-%define version 5.2.1
-%define release 1
-
 %define realname qwt
 %define major 5
 %define libname %mklibname %{realname} %major
@@ -9,9 +5,9 @@
 
 %define debug_package %{nil} 
 
-Name: %name
-Version: %version
-Release: %mkrel %release
+Name: libqwt
+Version: 5.2.1
+Release: %mkrel 2
 Summary: 2D plotting widget extension to the Qt GUI
 License: Qwt License 1.0
 Group: System/Libraries
@@ -19,10 +15,7 @@ Url: http://sourceforge.net/projects/qwt
 Source: http://freefr.dl.sourceforge.net/sourceforge/qwt/%realname-%version.tar.bz2
 Patch0: qwt-5.2.1-qwtconfig-installbase.patch
 Patch1: qwt-5.1.1-do-not-install-docs.patch
-
-# Automatically added by buildreq on Fri Dec 03 2004
-BuildRequires: fontconfig freetype2 gcc-c++ qt4-devel libstdc++-devel X11-devel
-
+BuildRequires: qt4-devel
 BuildRoot: %{_tmppath}/%{name}-root
 
 %description
