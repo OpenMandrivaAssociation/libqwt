@@ -7,7 +7,7 @@
 
 Name: libqwt
 Version: 5.2.1
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: 2D plotting widget extension to the Qt GUI
 License: Qwt License 1.0
 Group: System/Libraries
@@ -66,6 +66,8 @@ make install INSTALL_ROOT=%{buildroot}
 
 mkdir -p %{buildroot}%{_mandir}/man3/
 install doc/man/man3/* %{buildroot}%{_mandir}/man3/
+
+(cd %{buildroot}/%{_mandir}/man3/; F=`ls deprecated.3*`; mv $F libqwt.$F)
 
 %if %mdkversion < 200900
 %post -n %libname -p /sbin/ldconfig
