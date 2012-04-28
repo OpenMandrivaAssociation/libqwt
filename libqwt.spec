@@ -1,22 +1,25 @@
 %define realname qwt
-%define major 5
-%define libname %mklibname %{realname} %major
+%define major 6
+%define libname %mklibname %{realname} %{major}
 %define libnamedev %mklibname %{realname} -d
 
-%define debug_package %{nil} 
+%define lib5name %mklibname %{realname} 5
 
-Name: libqwt
-Version: 5.2.1
-Release: %mkrel 3
-Summary: 2D plotting widget extension to the Qt GUI
-License: Qwt License 1.0
-Group: System/Libraries
-Url: http://sourceforge.net/projects/qwt
-Source: http://freefr.dl.sourceforge.net/sourceforge/qwt/%realname-%version.tar.bz2
-Patch0: qwt-5.2.1-qwtconfig-installbase.patch
-Patch1: qwt-5.1.1-do-not-install-docs.patch
-BuildRequires: qt4-devel
-BuildRoot: %{_tmppath}/%{name}-root
+%define debug_package %{nil}
+
+Name:		libqwt
+Version:	6.0.1
+Release:	1
+Summary:	2D plotting widget extension to the Qt GUI
+License:	Qwt License 1.0
+Group:		System/Libraries
+Url:		http://sourceforge.net/projects/qwt
+Source:		http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
+Patch0:		qwt-6.0.1-qwtconfig.patch
+Patch1:		qwt-6.0.1-do-not-install-docs.patch
+Patch2:		qwt-6.0.1-linkage.patch
+Patch3:		qwt-6.0.1-sfmt.patch
+BuildRequires:	qt4-devel
 
 %description
 Qwt is an extension to the Qt GUI library from Troll Tech AS.
@@ -25,25 +28,27 @@ primarily useful for technical and scientifical purposes.
 It includes a 2-D plotting widget, different kinds of sliders,
 and much more.
 
-%package -n %libname 
-Summary: 2D plotting widget extension to the Qt GUI
-Group: System/Libraries
+%package -n %{libname}
+Summary:	2D plotting widget extension to the Qt GUI
+Group:		System/Libraries
 
-%description -n %libname
+%description -n %{libname}
 The libqwt-devel package contains the header files and static libraries
 necessary for developing programs using the Qwt Widget set
 
 If you want to develop programs which will use this set of widgets,
 you should install this package. You need also to install the libqwt package.
 
-%package -n %libnamedev
-Summary: Development tools for programs which uses Qwt Widget set
-Group: System/Libraries
-Requires: %libname = %version
-Provides: libqwt-devel = %version-%release
-Obsoletes: %libname-devel
+%package -n %{libnamedev}
+Summary:	Development tools for programs which uses Qwt Widget set
+Group:		System/Libraries
+Requires:	%{libname} = %{EVRD}
+Requires:	qt4-devel
+Provides:	libqwt-devel = %{EVRD}
+Obsoletes:	%{libname}-devel
+Conflicts:	%{lib5name}
 
-%description -n %libnamedev
+%description -n %{libnamedev}
 The libqwt-devel package contains the header files and static libraries
 necessary for developing programs using the Qwt Widget set
 
@@ -51,44 +56,30 @@ If you want to develop programs which will use this set of widgets,
 you should install this package. You need also to install the libqwt package.
 
 %prep
-%setup -q -n %realname-%version
-%patch0 -p0 -b .base
-%patch1 -p0 -b .doc
-sed -i -e 's|INSTALLBASE/lib|INSTALLBASE/%{_lib}|' qwtconfig.pri
+%setup -q -n %{realname}-%{version}
+%patch0 -p1 -b .installpath
+%patch1 -p1 -b .doc
+%patch2 -p1 -b .linkage
+%patch3 -p1 -b .sfmt
+sed -i -e 's|{QWT_INSTALL_PREFIX}/lib|{QWT_INSTALL_PREFIX}/%{_lib}|' qwtconfig.pri
+sed -i -e 's|{QWT_INSTALL_PREFIX}/plugins/designer|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/plugins/designer|' qwtconfig.pri
+sed -i -e 's|{QWT_INSTALL_PREFIX}/features|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/features|' qwtconfig.pri
 
 %build
-%qmake_qt4 INSTALLBASE=%{_prefix}
+%qmake_qt4 QT_INSTALL_PREFIX=%{_prefix}
 make
 
 %install
-rm -rf %{buildroot}
 make install INSTALL_ROOT=%{buildroot}
 
-mkdir -p %{buildroot}%{_mandir}/man3/
-install doc/man/man3/* %{buildroot}%{_mandir}/man3/
-
-(cd %{buildroot}/%{_mandir}/man3/; F=`ls deprecated.3*`; mv $F libqwt.$F)
-
-%if %mdkversion < 200900
-%post -n %libname -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %libname -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%files -n %libname
-%defattr (-,root,root)
+%files -n %{libname}
 %doc CHANGES COPYING README
-%_libdir/libqwt.so.*
-%{qt4plugins}/designer/*
+%{_libdir}/*.so.%{major}*
 
-%files -n %libnamedev
-%defattr (-,root,root)
-%doc COPYING doc/html/*.css doc/html/*.html doc/html/*.gif doc/html/*.png
-%doc examples
-%_includedir/*
-%_libdir/*.so
-%_mandir/man3/*
+%files -n %{libnamedev}
+%doc examples doc/html
+%{_includedir}/*
+%{qt4lib}/*.so
+%{qt4plugins}/designer/*.so
+%{qt4lib}/qt4/features
+
