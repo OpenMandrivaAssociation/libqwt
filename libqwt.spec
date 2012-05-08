@@ -71,7 +71,7 @@ sed -i -e 's|{QWT_INSTALL_PREFIX}/features|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/feat
 make
 
 %install
-%makeinstall_std
+make install INSTALL_ROOT=%{buildroot}
 
 %files -n %{libname}
 %doc CHANGES COPYING README
