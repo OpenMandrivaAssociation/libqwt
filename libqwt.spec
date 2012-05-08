@@ -9,12 +9,12 @@
 
 Name:		libqwt
 Version:	6.0.1
-Release:	1
+Release:	2
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
 Url:		http://sourceforge.net/projects/qwt
-Source:		http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
+Source0:	http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
 Patch0:		qwt-6.0.1-qwtconfig.patch
 Patch1:		qwt-6.0.1-do-not-install-docs.patch
 Patch2:		qwt-6.0.1-linkage.patch
@@ -45,6 +45,7 @@ Group:		System/Libraries
 Requires:	%{libname} = %{EVRD}
 Requires:	qt4-devel
 Provides:	libqwt-devel = %{EVRD}
+Provides:	qwt-devel = %{EVRD}
 Obsoletes:	%{libname}-devel
 Conflicts:	%{lib5name}
 
@@ -70,7 +71,7 @@ sed -i -e 's|{QWT_INSTALL_PREFIX}/features|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/feat
 make
 
 %install
-make install INSTALL_ROOT=%{buildroot}
+%makeinstall_std
 
 %files -n %{libname}
 %doc CHANGES COPYING README
