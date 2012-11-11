@@ -1,0 +1,12 @@
+diff -urN qwt-6.0.1/src/src.pro qwt-6.0.1-patched/src/src.pro
+--- qwt-6.0.1/src/src.pro	2011-08-02 01:33:53.000000000 +1100
++++ qwt-6.0.1-patched/src/src.pro	2012-04-28 18:05:44.666384280 +1100
+@@ -212,6 +212,8 @@
+         qwt_wheel.cpp
+ }
+ 
++LIBS += -lrt
++
+ # Install directives
+ 
+ target.path    = $${QWT_INSTALL_LIBS}
