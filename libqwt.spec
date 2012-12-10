@@ -84,3 +84,63 @@ make install INSTALL_ROOT=%{buildroot}
 %{qt4plugins}/designer/*.so
 %{qt4lib}/qt4/features
 
+
+
+%changelog
+* Tue May 08 2012 Alexander Khrukin <akhrukin@mandriva.org> 6.0.1-2
++ Revision: 797461
+- make install instead of macro
+- rebuild
+
+* Sat Apr 28 2012 Andrey Bondrov <abondrov@mandriva.org> 6.0.1-1
++ Revision: 794201
+- New version 6.0.1, new major 6, update patches, Requires, Conflicts and file list
+
+* Tue May 17 2011 Paulo Andrade <pcpa@mandriva.com.br> 5.2.1-3
++ Revision: 675373
+- Rename conflicting manpage filename
+
+* Sat Feb 05 2011 Funda Wang <fwang@mandriva.org> 5.2.1-2
++ Revision: 636050
+- tighten BR
+
+* Mon Aug 23 2010 Yuri Myasoedov <omerta13@mandriva.org> 5.2.1-1mdv2011.0
++ Revision: 572091
+- New version 5.2.1
+
+* Fri May 01 2009 Funda Wang <fwang@mandriva.org> 5.2.0-1mdv2010.0
++ Revision: 369350
+- New version 5.2.0
+
+* Fri Mar 13 2009 Funda Wang <fwang@mandriva.org> 5.1.1-1mdv2009.1
++ Revision: 354460
+- rediff patch
+
+* Tue Aug 05 2008 Funda Wang <fwang@mandriva.org> 5.1.1-1mdv2009.0
++ Revision: 263932
+- New version 5.1.1
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Thu May 15 2008 Funda Wang <fwang@mandriva.org> 5.1.0-1mdv2009.0
++ Revision: 207499
+- New version 5.1.0
+
+* Wed Jan 02 2008 Olivier Blin <blino@mandriva.org> 5.0.2-1mdv2008.1
++ Revision: 140928
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sat Jul 21 2007 Funda Wang <fwang@mandriva.org> 5.0.2-1mdv2008.0
++ Revision: 54251
+- New version
+- renew file list
+- Build qt4 version
+
+* Mon Apr 23 2007 Lenny Cartier <lenny@mandriva.org> 5.0.1-1mdv2008.0
++ Revision: 17323
+- Update to 5.0.1
+
