@@ -81,7 +81,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files -n %{libname}
 %doc CHANGES COPYING README
-%{_libdir}/*.so.%{major}*
+#{_libdir}/*.so.%{major}*
 
 %files -n %{libnamedev}
 %doc examples doc/html
