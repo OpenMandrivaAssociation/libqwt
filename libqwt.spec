@@ -103,18 +103,6 @@ you should install this package. You need also to install the libqwt-qt5 package
 %install
 make install INSTALL_ROOT=%{buildroot}
 
-%files -n %{libname}
-%doc CHANGES COPYING README
-#{_libdir}/*.so.%{major}*
-
-%files -n %{libnamedev}
-%doc examples doc/html
-%{_includedir}/*
-%{qt4lib}/*.so
-%{qt4plugins}/designer/*.so
-%{qt4lib}/qt4/features
-
-
 
 %changelog
 * Tue May 08 2012 Alexander Khrukin <akhrukin@mandriva.org> 6.0.1-2
