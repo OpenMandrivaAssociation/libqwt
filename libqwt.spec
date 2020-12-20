@@ -8,18 +8,26 @@
 %define debug_package %{nil}
 
 Name:		libqwt
-Version:	6.0.1
-Release:	3
+Version:	6.1.5
+Release:	1
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
 Url:		http://sourceforge.net/projects/qwt
 Source0:	http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
-Patch0:		qwt-6.0.1-qwtconfig.patch
-Patch1:		qwt-6.0.1-do-not-install-docs.patch
-Patch2:		qwt-6.0.1-linkage.patch
-Patch3:		qwt-6.0.1-sfmt.patch
-BuildRequires:	qt4-devel
+#Patch0:		qwt-6.0.1-qwtconfig.patch
+#Patch1:		qwt-6.0.1-do-not-install-docs.patch
+#Patch2:		qwt-6.0.1-linkage.patch
+#Patch3:		qwt-6.0.1-sfmt.patch
+
+BuildRequires:  pkgconfig(Qt5Concurrent)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Designer)
+BuildRequires:  pkgconfig(Qt5OpenGL)
+BuildRequires:  pkgconfig(Qt5PrintSupport)
+BuildRequires:  pkgconfig(Qt5Svg)
+BuildRequires:  pkgconfig(Qt5Widgets)
 
 %description
 Qwt is an extension to the Qt GUI library from Troll Tech AS.
@@ -58,17 +66,14 @@ you should install this package. You need also to install the libqwt package.
 
 %prep
 %setup -q -n %{realname}-%{version}
-%patch0 -p1 -b .installpath
-%patch1 -p1 -b .doc
-%patch2 -p1 -b .linkage
-%patch3 -p1 -b .sfmt
-sed -i -e 's|{QWT_INSTALL_PREFIX}/lib|{QWT_INSTALL_PREFIX}/%{_lib}|' qwtconfig.pri
-sed -i -e 's|{QWT_INSTALL_PREFIX}/plugins/designer|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/plugins/designer|' qwtconfig.pri
-sed -i -e 's|{QWT_INSTALL_PREFIX}/features|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/features|' qwtconfig.pri
+
+#sed -i -e 's|{QWT_INSTALL_PREFIX}/lib|{QWT_INSTALL_PREFIX}/%{_lib}|' qwtconfig.pri
+#sed -i -e 's|{QWT_INSTALL_PREFIX}/plugins/designer|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/plugins/designer|' qwtconfig.pri
+#sed -i -e 's|{QWT_INSTALL_PREFIX}/features|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/features|' qwtconfig.pri
 
 %build
-%qmake_qt4 QT_INSTALL_PREFIX=%{_prefix}
-make
+%qmake_qt5 QWT_CONFIG+=QwtPkgConfig ..
+%make_build
 
 %install
 make install INSTALL_ROOT=%{buildroot}
