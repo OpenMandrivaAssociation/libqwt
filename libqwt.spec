@@ -37,34 +37,58 @@ primarily useful for technical and scientifical purposes.
 It includes a 2-D plotting widget, different kinds of sliders,
 and much more.
 
-%package -n %{libname}
-Summary:	2D plotting widget extension to the Qt GUI
-Group:		System/Libraries
+%define libname_qt5 %mklibname %realname-qt5_ %{major}
 
-%description -n %{libname}
-The libqwt-devel package contains the header files and static libraries
-necessary for developing programs using the Qwt Widget set
+%package -n     %{libname_qt5}
+Summary:        2D plotting widget extension to the Qt5 GUI
+Group:          System/Libraries
+
+%description -n %{libname_qt5}
+Qwt is an extension to the Qt5 GUI library from Troll Tech AS.
+The Qwt library contains widgets and components which are
+primarily useful for technical and scientifical purposes.
+It includes a 2-D plotting widget, different kinds of sliders,
+and much more.
+
+This package provides the runtime library.
+
+%files -n %{libname_qt5}
+%doc CHANGES* README
+%license COPYING
+%{_qt5_libdir}/libqwt-qt5.so.%{major}{,.*}
+%{_qt5_libdir}/libqwtmathml-qt5.so.%{major}{,.*}
+%{_qt5_plugindir}/designer/libqwt_designer_plugin.so
+
+#------------------------------------------------------------------------------
+
+%define libnamedev_qt5 %mklibname qwt-qt5 -d
+
+%package -n     %{libnamedev_qt5}
+Summary:        Development tools for programs which uses Qt5 Qwt Widget set
+Group:          System/Libraries
+Requires:       %{libname_qt5} = %{version}
+Provides:       libqwt-qt5-devel = %{version}-%{release}
+Provides:       libqwtmathml-qt5-devel = %{version}-%{release}
+
+%description -n %{libnamedev_qt5}
+The %{libnamedev_qt5} package contains the header files and static libraries
+necessary for developing programs using the Qt5 Qwt Widget set.
 
 If you want to develop programs which will use this set of widgets,
-you should install this package. You need also to install the libqwt package.
+you should install this package. You need also to install the libqwt-qt5 package.
 
-%package -n %{libnamedev}
-Summary:	Development tools for programs which uses Qwt Widget set
-Group:		System/Libraries
-Requires:	%{libname} = %{EVRD}
-Requires:	qt4-devel
-Provides:	libqwt-devel = %{EVRD}
-Provides:	qwt-devel = %{EVRD}
-Obsoletes:	%{libname}-devel
-Conflicts:	%{lib5name}
-
-%description -n %{libnamedev}
-The libqwt-devel package contains the header files and static libraries
-necessary for developing programs using the Qwt Widget set
-
-If you want to develop programs which will use this set of widgets,
-you should install this package. You need also to install the libqwt package.
-
+%files -n %{libnamedev_qt5}
+%doc COPYING
+%doc examples
+%docdir %{_qt5_docdir}/html/
+%{_qt5_docdir}/html/qwt/
+%{_qt5_includedir}/qwt/
+%{_qt5_libdir}/libqwt-qt5.so
+%{_qt5_libdir}/libqwtmathml-qt5.so
+%{_qt5_libdir}/pkgconfig/Qt5Qwt6.pc
+%{_qt5_libdir}/pkgconfig/qwtmathml-qt5.pc
+%{_qt5_archdatadir}/mkspecs/*
+%{_mandir}/man3/*
 %prep
 %setup -q -n %{realname}-%{version}
 
