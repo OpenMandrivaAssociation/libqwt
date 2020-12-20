@@ -28,6 +28,7 @@ BuildRequires:  pkgconfig(Qt5OpenGL)
 BuildRequires:  pkgconfig(Qt5PrintSupport)
 BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  qmake5
 
 %description
 Qwt is an extension to the Qt GUI library from Troll Tech AS.
