@@ -73,7 +73,7 @@ you should install this package. You need also to install the libqwt package.
 #sed -i -e 's|{QWT_INSTALL_PREFIX}/features|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/features|' qwtconfig.pri
 
 %build
-%qmake_qt5 QWT_CONFIG+=QwtPkgConfig ..
+%qmake_qt5
 %make_build
 
 %install
