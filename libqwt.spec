@@ -15,10 +15,14 @@ License:	Qwt License 1.0
 Group:		System/Libraries
 Url:		http://sourceforge.net/projects/qwt
 Source0:	http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
-#Patch0:		qwt-6.0.1-qwtconfig.patch
-#Patch1:		qwt-6.0.1-do-not-install-docs.patch
-#Patch2:		qwt-6.0.1-linkage.patch
-#Patch3:		qwt-6.0.1-sfmt.patch
+# fix pkgconfig support
+Patch50:        qwt-6.1.1-pkgconfig.patch
+# use QT_INSTALL_ paths instead of custom prefix
+Patch51:        qwt-6.1.5-qt_install_paths.patch
+# parallel-installable qt5 version
+Patch52:        qwt-qt5.patch
+#
+Patch53:        qwt-6.1.3-no_rpath.patch
 
 BuildRequires:  pkgconfig(Qt5Concurrent)
 BuildRequires:  pkgconfig(Qt5Core)
@@ -92,6 +96,7 @@ you should install this package. You need also to install the libqwt-qt5 package
 
 %prep
 %setup -q -n %{realname}-%{version}
+%autopatch -p1
 
 #sed -i -e 's|{QWT_INSTALL_PREFIX}/lib|{QWT_INSTALL_PREFIX}/%{_lib}|' qwtconfig.pri
 #sed -i -e 's|{QWT_INSTALL_PREFIX}/plugins/designer|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/plugins/designer|' qwtconfig.pri
