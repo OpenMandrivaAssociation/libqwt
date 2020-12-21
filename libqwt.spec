@@ -55,9 +55,9 @@ This package provides the runtime library.
 %files -n %{libname_qt5}
 %doc CHANGES* README
 %license COPYING
-%{_qt5_libdir}/libqwt-qt5.so.%{major}{,.*}
-%{_qt5_libdir}/libqwtmathml-qt5.so.%{major}{,.*}
-%{_qt5_plugindir}/designer/libqwt_designer_plugin.so
+#{_qt5_libdir}/libqwt-qt5.so.%{major}{,.*}
+#{_qt5_libdir}/libqwtmathml-qt5.so.%{major}{,.*}
+#{_qt5_plugindir}/designer/libqwt_designer_plugin.so
 
 #------------------------------------------------------------------------------
 
