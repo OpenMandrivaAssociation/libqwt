@@ -104,7 +104,7 @@ you should install this package. You need also to install the libqwt-qt5 package
 
 %build
 mkdir qt5 && pushd qt5
-%qmake_qt5 QWT_CONFIG+=QwtPkgConfig ..
+%qmake QWT_CONFIG+=QwtPkgConfig ..
 %make_build
 popd
 
