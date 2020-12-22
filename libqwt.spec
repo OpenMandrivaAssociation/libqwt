@@ -91,7 +91,7 @@ you should install this package. You need also to install the libqwt-qt5 package
 %{_qt5_libdir}/libqwtmathml-qt5.so
 %{_qt5_libdir}/pkgconfig/Qt5Qwt6.pc
 %{_qt5_libdir}/pkgconfig/qwtmathml-qt5.pc
-%{_libdir}qt5/mkspecs/*
+%{_libdir}/qt5/mkspecs/*
 %{_mandir}/man3/*
 
 %prep
