@@ -59,9 +59,9 @@ This package provides the runtime library.
 %files -n %{libname_qt5}
 %doc CHANGES* README
 %license COPYING
-#{_qt5_libdir}/libqwt-qt5.so.%{major}{,.*}
-#{_qt5_libdir}/libqwtmathml-qt5.so.%{major}{,.*}
-#{_qt5_plugindir}/designer/libqwt_designer_plugin.so
+%{_qt5_libdir}/libqwt-qt5.so.%{major}{,.*}
+%{_qt5_libdir}/libqwtmathml-qt5.so.%{major}{,.*}
+%{_qt5_plugindir}/designer/libqwt_designer_plugin.so
 
 #------------------------------------------------------------------------------
 
@@ -84,15 +84,15 @@ you should install this package. You need also to install the libqwt-qt5 package
 %files -n %{libnamedev_qt5}
 %doc COPYING
 %doc examples
-#docdir #{_qt5_docdir}/html/
-#{_qt5_docdir}/html/qwt/
-#{_qt5_includedir}/qwt/
-#{_qt5_libdir}/libqwt-qt5.so
-#{_qt5_libdir}/libqwtmathml-qt5.so
-#{_qt5_libdir}/pkgconfig/Qt5Qwt6.pc
-#{_qt5_libdir}/pkgconfig/qwtmathml-qt5.pc
-#{_qt5_archdatadir}/mkspecs/*
-#{_mandir}/man3/*
+%docdir %{_qt5_docdir}/html/
+%{_qt5_docdir}/html/qwt/
+%{_qt5_includedir}/qwt/
+%{_qt5_libdir}/libqwt-qt5.so
+%{_qt5_libdir}/libqwtmathml-qt5.so
+%{_qt5_libdir}/pkgconfig/Qt5Qwt6.pc
+%{_qt5_libdir}/pkgconfig/qwtmathml-qt5.pc
+%{_qt5_archdatadir}/mkspecs/*
+%{_mandir}/man3/*
 
 %prep
 %setup -q -n %{realname}-%{version}
@@ -107,7 +107,11 @@ you should install this package. You need also to install the libqwt-qt5 package
 %make_build
 
 %install
-make install INSTALL_ROOT=%{buildroot}
+%make_install INSTALL_ROOT=%{buildroot}
+
+mv %{buildroot}%{_qt5_docdir}/html/html %{buildroot}%{_qt5_docdir}/html/qwt
+mkdir -p %{buildroot}%{_mandir}
+mv %{buildroot}%{_qt5_docdir}/html/man/man3 %{buildroot}%{_mandir}/
 
 
 %changelog
