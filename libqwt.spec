@@ -98,15 +98,9 @@ you should install this package. You need also to install the libqwt-qt5 package
 %setup -q -n %{realname}-%{version}
 %autopatch -p1
 
-#sed -i -e 's|{QWT_INSTALL_PREFIX}/lib|{QWT_INSTALL_PREFIX}/%{_lib}|' qwtconfig.pri
-#sed -i -e 's|{QWT_INSTALL_PREFIX}/plugins/designer|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/plugins/designer|' qwtconfig.pri
-#sed -i -e 's|{QWT_INSTALL_PREFIX}/features|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/features|' qwtconfig.pri
-
 %build
-mkdir qt5 && pushd qt5
-%qmake QWT_CONFIG+=QwtPkgConfig ..
+%qmake_qt5 QWT_CONFIG+=QwtPkgConfig CONFIG+=nostrip
 %make_build
-popd
 
 %install
 %make_install INSTALL_ROOT=%{buildroot}
