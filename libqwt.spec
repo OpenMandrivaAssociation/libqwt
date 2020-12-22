@@ -8,18 +8,31 @@
 %define debug_package %{nil}
 
 Name:		libqwt
-Version:	6.0.1
-Release:	3
+Version:	6.1.5
+Release:	1
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
 Url:		http://sourceforge.net/projects/qwt
 Source0:	http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
-Patch0:		qwt-6.0.1-qwtconfig.patch
-Patch1:		qwt-6.0.1-do-not-install-docs.patch
-Patch2:		qwt-6.0.1-linkage.patch
-Patch3:		qwt-6.0.1-sfmt.patch
-BuildRequires:	qt4-devel
+# fix pkgconfig support
+Patch50:        qwt-6.1.1-pkgconfig.patch
+# use QT_INSTALL_ paths instead of custom prefix
+Patch51:        qwt-6.1.5-qt_install_paths.patch
+# parallel-installable qt5 version
+Patch52:        qwt-qt5.patch
+#
+Patch53:        qwt-6.1.3-no_rpath.patch
+
+BuildRequires:  pkgconfig(Qt5Concurrent)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Designer)
+BuildRequires:  pkgconfig(Qt5OpenGL)
+BuildRequires:  pkgconfig(Qt5PrintSupport)
+BuildRequires:  pkgconfig(Qt5Svg)
+BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  qmake5
 
 %description
 Qwt is an extension to the Qt GUI library from Troll Tech AS.
@@ -28,62 +41,73 @@ primarily useful for technical and scientifical purposes.
 It includes a 2-D plotting widget, different kinds of sliders,
 and much more.
 
-%package -n %{libname}
-Summary:	2D plotting widget extension to the Qt GUI
-Group:		System/Libraries
+%define libname_qt5 %mklibname %realname-qt5_ %{major}
 
-%description -n %{libname}
-The libqwt-devel package contains the header files and static libraries
-necessary for developing programs using the Qwt Widget set
+%package -n     %{libname_qt5}
+Summary:        2D plotting widget extension to the Qt5 GUI
+Group:          System/Libraries
+
+%description -n %{libname_qt5}
+Qwt is an extension to the Qt5 GUI library from Troll Tech AS.
+The Qwt library contains widgets and components which are
+primarily useful for technical and scientifical purposes.
+It includes a 2-D plotting widget, different kinds of sliders,
+and much more.
+
+This package provides the runtime library.
+
+%files -n %{libname_qt5}
+%doc CHANGES* README
+%license COPYING
+%{_qt5_libdir}/libqwt-qt5.so.%{major}{,.*}
+%{_qt5_libdir}/libqwtmathml-qt5.so.%{major}{,.*}
+%{_qt5_plugindir}/designer/libqwt_designer_plugin.so
+
+#------------------------------------------------------------------------------
+
+%define libnamedev_qt5 %mklibname qwt-qt5 -d
+
+%package -n     %{libnamedev_qt5}
+Summary:        Development tools for programs which uses Qt5 Qwt Widget set
+Group:          System/Libraries
+Requires:       %{libname_qt5} = %{version}
+Provides:       libqwt-qt5-devel = %{version}-%{release}
+Provides:       libqwtmathml-qt5-devel = %{version}-%{release}
+
+%description -n %{libnamedev_qt5}
+The %{libnamedev_qt5} package contains the header files and static libraries
+necessary for developing programs using the Qt5 Qwt Widget set.
 
 If you want to develop programs which will use this set of widgets,
-you should install this package. You need also to install the libqwt package.
+you should install this package. You need also to install the libqwt-qt5 package.
 
-%package -n %{libnamedev}
-Summary:	Development tools for programs which uses Qwt Widget set
-Group:		System/Libraries
-Requires:	%{libname} = %{EVRD}
-Requires:	qt4-devel
-Provides:	libqwt-devel = %{EVRD}
-Provides:	qwt-devel = %{EVRD}
-Obsoletes:	%{libname}-devel
-Conflicts:	%{lib5name}
-
-%description -n %{libnamedev}
-The libqwt-devel package contains the header files and static libraries
-necessary for developing programs using the Qwt Widget set
-
-If you want to develop programs which will use this set of widgets,
-you should install this package. You need also to install the libqwt package.
+%files -n %{libnamedev_qt5}
+%doc COPYING
+%doc examples
+%docdir %{_qt5_docdir}/html/
+%{_qt5_docdir}/html/qwt/
+%{_qt5_includedir}/qwt/
+%{_qt5_libdir}/libqwt-qt5.so
+%{_qt5_libdir}/libqwtmathml-qt5.so
+%{_qt5_libdir}/pkgconfig/Qt5Qwt6.pc
+%{_qt5_libdir}/pkgconfig/qwtmathml-qt5.pc
+%{_libdir}/qt5/mkspecs/*
+%{_mandir}/man3/*
 
 %prep
 %setup -q -n %{realname}-%{version}
-%patch0 -p1 -b .installpath
-%patch1 -p1 -b .doc
-%patch2 -p1 -b .linkage
-%patch3 -p1 -b .sfmt
-sed -i -e 's|{QWT_INSTALL_PREFIX}/lib|{QWT_INSTALL_PREFIX}/%{_lib}|' qwtconfig.pri
-sed -i -e 's|{QWT_INSTALL_PREFIX}/plugins/designer|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/plugins/designer|' qwtconfig.pri
-sed -i -e 's|{QWT_INSTALL_PREFIX}/features|{QWT_INSTALL_PREFIX}/%{_lib}/qt4/features|' qwtconfig.pri
+%autopatch -p1
 
 %build
-%qmake_qt4 QT_INSTALL_PREFIX=%{_prefix}
-make
+%qmake_qt5 QWT_CONFIG+=QwtPkgConfig CONFIG+=nostrip
+%make_build
 
 %install
-make install INSTALL_ROOT=%{buildroot}
+%make_install INSTALL_ROOT=%{buildroot}
 
-%files -n %{libname}
-%doc CHANGES COPYING README
-%{_libdir}/*.so.%{major}*
-
-%files -n %{libnamedev}
-%doc examples doc/html
-%{_includedir}/*
-%{qt4lib}/*.so
-%{qt4plugins}/designer/*.so
-%{qt4lib}/qt4/features
-
+mv %{buildroot}%{_qt5_docdir}/html/html %{buildroot}%{_qt5_docdir}/html/qwt
+mkdir -p %{buildroot}%{_mandir}
+mv %{buildroot}%{_qt5_docdir}/html/man/man3 %{buildroot}%{_mandir}/
 
 
 %changelog
