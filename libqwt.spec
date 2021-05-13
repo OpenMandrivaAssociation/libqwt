@@ -5,7 +5,7 @@
 
 %define lib5name %mklibname %{realname} 5
 
-%define debug_package %{nil}
+#define debug_package %{nil}
 
 Name:		libqwt
 Version:	6.1.6
