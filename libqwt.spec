@@ -8,15 +8,15 @@
 #define debug_package %{nil}
 
 Name:		libqwt
-Version:	6.1.6
-Release:	2
+Version:	6.2.0
+Release:	1
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
 Url:		http://sourceforge.net/projects/qwt
 Source0:	http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
 # fix pkgconfig support
-Patch50:        qwt-6.1.1-pkgconfig.patch
+#Patch50:        qwt-6.1.1-pkgconfig.patch
 # use QT_INSTALL_ paths instead of custom prefix
 Patch51:        qwt-6.1.5-qt_install_paths.patch
 # parallel-installable qt5 version
@@ -60,7 +60,7 @@ This package provides the runtime library.
 %doc CHANGES* README
 %license COPYING
 %{_qt5_libdir}/libqwt-qt5.so.%{major}{,.*}
-%{_qt5_libdir}/libqwtmathml-qt5.so.%{major}{,.*}
+%{_libdir}/libqwt.so.%{major}.*
 %{_qt5_plugindir}/designer/libqwt_designer_plugin.so
 
 #------------------------------------------------------------------------------
@@ -84,15 +84,13 @@ you should install this package. You need also to install the libqwt-qt5 package
 %files -n %{libnamedev_qt5}
 %doc COPYING
 %doc examples
-%docdir %{_qt5_docdir}/html/
-%{_qt5_docdir}/html/qwt/
+%doc %{_datadir}/doc/qt5/html/qwt/
 %{_qt5_includedir}/qwt/
 %{_qt5_libdir}/libqwt-qt5.so
-%{_qt5_libdir}/libqwtmathml-qt5.so
+#{_qt5_libdir}/libqwtmathml-qt5.so
 %{_qt5_libdir}/pkgconfig/Qt5Qwt6.pc
-%{_qt5_libdir}/pkgconfig/qwtmathml-qt5.pc
 %{_libdir}/qt5/mkspecs/*
-%{_mandir}/man3/*
+%{_mandir}/man3/
 
 %prep
 %setup -q -n %{realname}-%{version}
