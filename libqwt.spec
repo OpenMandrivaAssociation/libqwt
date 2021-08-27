@@ -8,8 +8,8 @@
 #define debug_package %{nil}
 
 Name:		libqwt
-Version:	6.1.6
-Release:	2
+Version:	6.2.0
+Release:	1
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
