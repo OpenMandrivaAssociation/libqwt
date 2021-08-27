@@ -84,13 +84,13 @@ you should install this package. You need also to install the libqwt-qt5 package
 %files -n %{libnamedev_qt5}
 %doc COPYING
 %doc examples
-#doc %{_datadir}/doc/qt5/html/html/
+%doc %{_datadir}/doc/qt5/html/qwt/
 %{_qt5_includedir}/qwt/
 %{_qt5_libdir}/libqwt-qt5.so
 #{_qt5_libdir}/libqwtmathml-qt5.so
 %{_qt5_libdir}/pkgconfig/Qt5Qwt6.pc
 %{_libdir}/qt5/mkspecs/*
-#{_datadir}/doc/qt5/html/man/man3/
+%{_mandir}/man3/
 
 %prep
 %setup -q -n %{realname}-%{version}
