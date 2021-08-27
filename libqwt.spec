@@ -106,8 +106,8 @@ you should install this package. You need also to install the libqwt-qt5 package
 %make_install INSTALL_ROOT=%{buildroot}
 
 #mv %{buildroot}%{_qt5_docdir}/html/html %{buildroot}%{_qt5_docdir}/html/qwt
-mkdir -p %{buildroot}%{_mandir}
-mv %{buildroot}%{_qt5_docdir}/html/man/man3 %{buildroot}%{_mandir}/
+#mkdir -p %{buildroot}%{_mandir}
+#mv %{buildroot}%{_qt5_docdir}/html/man/man3 %{buildroot}%{_mandir}/
 
 
 %changelog
