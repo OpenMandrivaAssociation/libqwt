@@ -7,7 +7,7 @@
 
 Name:		libqwt
 Version:	6.2.0
-Release:	4
+Release:	5
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
