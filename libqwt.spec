@@ -26,7 +26,7 @@
 
 Name:		libqwt
 Version:	6.2.0
-Release:	5
+Release:	6
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
@@ -167,7 +167,7 @@ you should install this package. You need also to install the libqwt-qt6 package
 %{_libdir}/qt6/lib/libqwt-qt6.so
 %{_libdir}/qt6/lib/libqwt.so.%{major}.*
 #{_libdir}/libqwtmathml-qt5.so
-%{_libdir}/qt6/lib/pkgconfig/Qt6Qwt6.pc
+%{_libdir}/pkgconfig/Qt6Qwt6.pc
 %{_libdir}/qt6/mkspecs/*
 
 %prep
@@ -195,6 +195,9 @@ mv %{buildroot}%{_qt5_docdir}/html/man/man3 %{buildroot}%{_mandir}/
 
 mv %{buildroot}%{_libdir}/qt6/doc/html/html %{buildroot}%{_libdir}/qt6/doc/html/qwt
 rm -Rf %{buildroot}%{_libdir}/qt6/doc/html/man
+
+mkdir -p %{buildroot}%{_libdir}/pkgconfig/
+mv %{buildroot}/%{_libdir}/qt6/lib/pkgconfig/Qt6Qwt6.pc %{buildroot}%{_libdir}/pkgconfig/
 
 %changelog
 * Tue May 08 2012 Alexander Khrukin <akhrukin@mandriva.org> 6.0.1-2
