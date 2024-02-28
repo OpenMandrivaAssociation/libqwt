@@ -32,8 +32,6 @@ License:	Qwt License 1.0
 Group:		System/Libraries
 Url:		http://sourceforge.net/projects/qwt
 Source0:	http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
-# fix pkgconfig support
-#Patch50:        qwt-6.1.1-pkgconfig.patch
 # use QT_INSTALL_ paths instead of custom prefix
 Patch51:        qwt-6.1.5-qt_install_paths.patch
 # parallel-installable qt5 version
