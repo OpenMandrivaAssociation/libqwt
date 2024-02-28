@@ -26,7 +26,7 @@
 
 Name:		libqwt
 Version:	6.2.0
-Release:	6
+Release:	7
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
@@ -166,7 +166,7 @@ you should install this package. You need also to install the libqwt-qt6 package
 %{_libdir}/qt6/include/qwt/
 %{_libdir}/qt6/lib/libqwt-qt6.so
 %{_libdir}/qt6/lib/libqwt.so.%{major}.*
-#{_libdir}/libqwtmathml-qt5.so
+#{_libdir}/libqwtmathml-qt6.so
 %{_libdir}/pkgconfig/Qt6Qwt6.pc
 %{_libdir}/qt6/mkspecs/*
 

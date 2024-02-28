@@ -26,3 +26,23 @@ diff -up qwt-6.1.2/qwtfunctions.pri.qt5 qwt-6.1.2/qwtfunctions.pri
  
      mac:contains(QWT_CONFIG, QwtFramework) {
  
+--- qwt-6.2.0/src/src.pro.orig	2024-02-28 21:50:29.524736354 +0000
++++ qwt-6.2.0/src/src.pro	2024-02-28 21:50:05.035523299 +0000
+@@ -82,14 +82,14 @@
+     greaterThan(QT_MAJOR_VERSION, 4) {
+ 
+         QMAKE_PKGCONFIG_FILE = Qt$${QT_MAJOR_VERSION}$${QMAKE_PKGCONFIG_NAME}
+-        QMAKE_PKGCONFIG_REQUIRES = Qt5Widgets Qt5Concurrent Qt5PrintSupport
++        QMAKE_PKGCONFIG_REQUIRES = Qt$${QT_MAJOR_VERSION}Widgets Qt$${QT_MAJOR_VERSION}Concurrent Qt$${QT_MAJOR_VERSION}PrintSupport
+ 
+         contains(QWT_CONFIG, QwtSvg) {
+-            QMAKE_PKGCONFIG_REQUIRES += Qt5Svg
++            QMAKE_PKGCONFIG_REQUIRES += Qt$${QT_MAJOR_VERSION}Svg
+         }
+ 
+         contains(QWT_CONFIG, QwtOpenGL) {
+-            QMAKE_PKGCONFIG_REQUIRES += Qt5OpenGL
++            QMAKE_PKGCONFIG_REQUIRES += Qt$${QT_MAJOR_VERSION}OpenGL
+         }
+ 
+         QMAKE_DISTCLEAN += $${DESTDIR}/$${QMAKE_PKGCONFIG_DESTDIR}/$${QMAKE_PKGCONFIG_FILE}.pc
