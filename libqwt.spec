@@ -30,7 +30,7 @@ Release:	9
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
-Url:		http://sourceforge.net/projects/qwt
+Url:		https://sourceforge.net/projects/qwt
 Source0:	http://freefr.dl.sourceforge.net/sourceforge/qwt/%{realname}-%{version}.tar.bz2
 # use QT_INSTALL_ paths instead of custom prefix
 Patch51:        qwt-6.1.5-qt_install_paths.patch
