@@ -25,8 +25,8 @@
 
 
 Name:		libqwt
-Version:	6.2.0
-Release:	10
+Version:	6.3.0
+Release:	1
 Summary:	2D plotting widget extension to the Qt GUI
 License:	Qwt License 1.0
 Group:		System/Libraries
@@ -83,7 +83,7 @@ and much more.
 This package provides the runtime library.
 
 %files -n %{libname_qt5}
-%doc CHANGES* README
+%doc README
 %license COPYING
 %{_qt5_libdir}/libqwt-qt5.so.%{major}{,.*}
 %{_libdir}/libqwt.so.%{major}.*
@@ -110,13 +110,12 @@ you should install this package. You need also to install the libqwt-qt5 package
 %files -n %{libnamedev_qt5}
 %doc COPYING
 %doc examples
-%doc %{_datadir}/doc/qt5/html/qwt/
+%doc %{_docdir}/qt5/html/html
 %{_qt5_includedir}/qwt/
 %{_qt5_libdir}/libqwt-qt5.so
 #{_qt5_libdir}/libqwtmathml-qt5.so
 %{_qt5_libdir}/pkgconfig/Qt5Qwt6.pc
 %{_libdir}/qt5/mkspecs/*
-%{_mandir}/man3/
 
 %define libname_qt6 %mklibname %realname-qt6_ %{major}
 
@@ -134,8 +133,6 @@ and much more.
 This package provides the runtime library.
 
 %files -n %{libname_qt6}
-#doc CHANGES* README
-#license COPYING
 %{_libdir}/qt6/lib/libqwt-qt6.so.%{major}{,.*}
 %{_libdir}/qt6/plugins/designer/libqwt_designer_plugin.so
 
@@ -184,74 +181,11 @@ popd
 %make_build
 
 %install
-%make_install INSTALL_ROOT=%{buildroot} -C qt6
 %make_install INSTALL_ROOT=%{buildroot}
-
-mv %{buildroot}%{_qt5_docdir}/html/html %{buildroot}%{_qt5_docdir}/html/qwt
-mkdir -p %{buildroot}%{_mandir}
-mv %{buildroot}%{_qt5_docdir}/html/man/man3 %{buildroot}%{_mandir}/
+%make_install INSTALL_ROOT=%{buildroot} -C qt6
 
 mv %{buildroot}%{_libdir}/qt6/doc/html/html %{buildroot}%{_libdir}/qt6/doc/html/qwt
 rm -Rf %{buildroot}%{_libdir}/qt6/doc/html/man
 
 mkdir -p %{buildroot}%{_libdir}/pkgconfig/
 mv %{buildroot}/%{_libdir}/qt6/lib/pkgconfig/Qt6Qwt6.pc %{buildroot}%{_libdir}/pkgconfig/
-
-%changelog
-* Tue May 08 2012 Alexander Khrukin <akhrukin@mandriva.org> 6.0.1-2
-+ Revision: 797461
-- make install instead of macro
-- rebuild
-
-* Sat Apr 28 2012 Andrey Bondrov <abondrov@mandriva.org> 6.0.1-1
-+ Revision: 794201
-- New version 6.0.1, new major 6, update patches, Requires, Conflicts and file list
-
-* Tue May 17 2011 Paulo Andrade <pcpa@mandriva.com.br> 5.2.1-3
-+ Revision: 675373
-- Rename conflicting manpage filename
-
-* Sat Feb 05 2011 Funda Wang <fwang@mandriva.org> 5.2.1-2
-+ Revision: 636050
-- tighten BR
-
-* Mon Aug 23 2010 Yuri Myasoedov <omerta13@mandriva.org> 5.2.1-1mdv2011.0
-+ Revision: 572091
-- New version 5.2.1
-
-* Fri May 01 2009 Funda Wang <fwang@mandriva.org> 5.2.0-1mdv2010.0
-+ Revision: 369350
-- New version 5.2.0
-
-* Fri Mar 13 2009 Funda Wang <fwang@mandriva.org> 5.1.1-1mdv2009.1
-+ Revision: 354460
-- rediff patch
-
-* Tue Aug 05 2008 Funda Wang <fwang@mandriva.org> 5.1.1-1mdv2009.0
-+ Revision: 263932
-- New version 5.1.1
-
-  + Pixel <pixel@mandriva.com>
-    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
-
-* Thu May 15 2008 Funda Wang <fwang@mandriva.org> 5.1.0-1mdv2009.0
-+ Revision: 207499
-- New version 5.1.0
-
-* Wed Jan 02 2008 Olivier Blin <blino@mandriva.org> 5.0.2-1mdv2008.1
-+ Revision: 140928
-- restore BuildRoot
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - kill re-definition of %%buildroot on Pixel's request
-
-* Sat Jul 21 2007 Funda Wang <fwang@mandriva.org> 5.0.2-1mdv2008.0
-+ Revision: 54251
-- New version
-- renew file list
-- Build qt4 version
-
-* Mon Apr 23 2007 Lenny Cartier <lenny@mandriva.org> 5.0.1-1mdv2008.0
-+ Revision: 17323
-- Update to 5.0.1
-
